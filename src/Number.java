@@ -7,10 +7,8 @@ public class Number {
     int intBase10;
 
     public Number(String input, int base) {
-        if (base == 16) {
+        if (base == 16)
             this.base16 = input;
-            ConvertNumber(input, base);
-        }
         else if (base == 10)
             this.base10 = input;
         else if (base == 8)
@@ -19,14 +17,48 @@ public class Number {
             this.base2 = input;
         else
             System.out.println("Invalid base.");
+
+
+        Convert(input, base);
+
     }
 
-    public int ConvertNumber(String input, int base) {
-        int num = 0;
+    public void Convert(String input, int base) {
+        double sum = 0;
         int len = input.length();
-        if (base == 2)
-            num = BinaryToDecimal(input, len);
-        return num;
+
+        if (base == 2) {
+            for (int i = 0; i < len; i++) {
+                char c = input.charAt(i);
+                int n = c - '0';
+                sum = sum + (n * Math.pow(2, len - (i + 1)));
+            }
+            this.base10 = Double.toString(sum);
+            this.intBase10 = (int) sum;
+
+            //base 16
+            sum = 0;
+            int r = 4 - (len % 4);
+            if (r != 0) {
+                for (int i = 0; i < r; i++)
+                    input = '0' + input;
+            }
+            System.out.println("new string " + input);
+
+            len = input.length();
+
+            for (int i = 0; i < (len / 4); i++) {
+                for (int j = 0; j < 4; j++) {
+                    char c = input.substring(i*4, (i+1)*4).charAt(j);
+                    int n = c - '0';
+                    System.out.println("n = " + n);
+                    sum = sum + ((n * Math.pow(2, 3-j))*(Math.pow(10, i)));
+                    System.out.println((n * Math.pow(2, 3-j))*(Math.pow(10, len)));//fix this
+                }
+                System.out.println("sum " + sum);
+            }
+            this.base16 = Double.toString(sum);
+        }
     }
 
     public int ConvertChar(char c) {
@@ -47,23 +79,14 @@ public class Number {
             return -1;
     }
 
-    public int BinaryToDecimal(String input, int len) {
-        int sum = 0;
-        for (int i = 0; i < len; i++){
-            if (Integer.parseInt(String.valueOf(input.charAt(i))) == '1')
-                sum = sum + Integer.parseInt(String.valueOf(input.charAt(i)))*(int)Math.pow(2, i);
-        }
-        return sum;
-    }
-
     @Override
     public String toString() {
         return "Number{" +
-                "base 16 = " + base16 +
-                ", base 10 = " + base10 +
-                ", base 8 = " + base8 +
-                ", base 2 = " + base2 +
-                ", intBase 10 = " + intBase10 +
+                "base 16 = '" + base16 +
+                "', base 10 = '" + base10 +
+                "', base 8 = '" + base8 +
+                "', base 2 = '" + base2 +
+                "', intBase 10 = " + intBase10 +
                 '}';
     }
 }

@@ -11,13 +11,7 @@ public class Main {
         int base = key.nextInt();
 
         Number num1 = new Number(num, base);
-
         System.out.println(num1.toString());
-        System.out.println(ConvertNumber(num, base));
-
-
-
-
 
     }
 }
