@@ -37,7 +37,9 @@ public class Number {
             this.intBase10 = (int) sum;
 
             //base 16
+            String str = "";
             sum = 0;
+
             int r = 4 - (len % 4);
             if (r != 0) {
                 for (int i = 0; i < r; i++)
@@ -51,13 +53,12 @@ public class Number {
                 for (int j = 0; j < 4; j++) {
                     char c = input.substring(i*4, (i+1)*4).charAt(j);
                     int n = c - '0';
-                    System.out.println("n = " + n);
-                    sum = sum + ((n * Math.pow(2, 3-j))*(Math.pow(10, i)));
-                    System.out.println((n * Math.pow(2, 3-j))*(Math.pow(10, len)));//fix this
+                    sum = sum + (n * Math.pow(2, 3-j));
                 }
-                System.out.println("sum " + sum);
+                str = str + String.valueOf(Math.round(sum));
+                sum = 0;
             }
-            this.base16 = Double.toString(sum);
+            this.base16 = str;
         }
     }
 
