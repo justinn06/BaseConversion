@@ -28,6 +28,7 @@ public class Number {
         int len = input.length();
 
         if (base == 2) {
+            //base 10
             for (int i = 0; i < len; i++) {
                 char c = input.charAt(i);
                 int n = c - '0';
@@ -36,18 +37,41 @@ public class Number {
             this.base10 = Double.toString(sum);
             this.intBase10 = (int) sum;
 
-            //base 16
+            //base 8
             String str = "";
             sum = 0;
 
-            int r = 4 - (len % 4);
+            int r = 3 - (len % 3);
             if (r != 0) {
                 for (int i = 0; i < r; i++)
                     input = '0' + input;
             }
-            System.out.println("new string " + input);
 
             len = input.length();
+
+            for (int i = 0; i < (len / 3); i++) {
+                for (int j = 0; j < 3; j++) {
+                    char c = input.substring(i*3, (i+1)*3).charAt(j);
+                    int n = c - '0';
+                    sum = sum + (n * Math.pow(2, 2-j));
+                }
+                str = str + String.valueOf(Math.round(sum));
+                sum = 0;
+            }
+            this.base8 = str;
+
+            //base 16
+            str = "";
+            sum = 0;
+
+            r = 4 - (len % 4);
+            if (r != 0) {
+                for (int i = 0; i < r; i++)
+                    input = '0' + input;
+            }
+
+            len = input.length();
+            String s = "";
 
             for (int i = 0; i < (len / 4); i++) {
                 for (int j = 0; j < 4; j++) {
@@ -55,29 +79,33 @@ public class Number {
                     int n = c - '0';
                     sum = sum + (n * Math.pow(2, 3-j));
                 }
-                str = str + String.valueOf(Math.round(sum));
+                if (sum > 9) {
+                    s = ConvertChar((int) sum);
+                }
+                else
+                    s = String.valueOf(Math.round(sum));
+                str = str + s;
                 sum = 0;
             }
             this.base16 = str;
         }
     }
 
-    public int ConvertChar(char c) {
-        if (c == 'A')
-            return 10;
-        else if (c == 'B')
-            return 11;
-        else if (c == 'C')
-            return 12;
-        else if (c == 'D')
-            return 13;
-        else if (c == 'E')
-            return 14;
-        else if (c == 'F')
-            return 15;
+    public String ConvertChar(int c) {
+        if (c == 10)
+            return "A";
+        else if (c == 11)
+            return "B";
+        else if (c == 12)
+            return "C";
+        else if (c == 13)
+            return "D";
+        else if (c == 14)
+            return "E";
+        else if (c == 15)
+            return "F";
         else
-            System.out.println("Invalid character.");
-            return -1;
+            return "invalid";
     }
 
     @Override
