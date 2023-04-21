@@ -17,41 +17,37 @@ public class Number {
             this.base2 = input;
         else
             System.out.println("Invalid base.");
-
-
-        Convert(input, base);
-
     }
 
-    public void Convert(String input, int base) {
+    public void Convert() {
         double sum = 0;
-        int len = input.length();
+        int len = base2.length();
 
-        if (base == 2) {
             //base 10
             for (int i = 0; i < len; i++) {
-                char c = input.charAt(i);
+                char c = base2.charAt(i);
                 int n = c - '0';
                 sum = sum + (n * Math.pow(2, len - (i + 1)));
             }
             this.base10 = Double.toString(sum);
             this.intBase10 = (int) sum;
 
-            //base 8
+
             String str = "";
             sum = 0;
 
+            //base 8
             int r = 3 - (len % 3);
             if (r != 0) {
                 for (int i = 0; i < r; i++)
-                    input = '0' + input;
+                    base2 = '0' + base2;
             }
 
-            len = input.length();
+            len = base2.length();
 
             for (int i = 0; i < (len / 3); i++) {
                 for (int j = 0; j < 3; j++) {
-                    char c = input.substring(i*3, (i+1)*3).charAt(j);
+                    char c = base2.substring(i*3, (i+1)*3).charAt(j);
                     int n = c - '0';
                     sum = sum + (n * Math.pow(2, 2-j));
                 }
@@ -63,19 +59,19 @@ public class Number {
             //base 16
             str = "";
             sum = 0;
+            String s = "";
 
             r = 4 - (len % 4);
             if (r != 0) {
                 for (int i = 0; i < r; i++)
-                    input = '0' + input;
+                    base2 = '0' + base2;
             }
 
-            len = input.length();
-            String s = "";
+            len = base2.length();
 
             for (int i = 0; i < (len / 4); i++) {
                 for (int j = 0; j < 4; j++) {
-                    char c = input.substring(i*4, (i+1)*4).charAt(j);
+                    char c = base2.substring(i*4, (i+1)*4).charAt(j);
                     int n = c - '0';
                     sum = sum + (n * Math.pow(2, 3-j));
                 }
@@ -89,7 +85,7 @@ public class Number {
             }
             this.base16 = str;
         }
-    }
+
 
     public String ConvertChar(int c) {
         if (c == 10)
